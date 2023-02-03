@@ -17,11 +17,13 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
 
+    @Transactional
     @Override
     public void createOrUpdateUser(User user) {
         if (0 == user.getId()) {
@@ -31,19 +33,23 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void createUser(User user) {
+    @Transactional
+    public void createUser(User user) {
         userDao.createUser(user);
     }
 
-    private void updateUser(User user) {
+    @Transactional
+    public void updateUser(User user) {
         userDao.updateUser(user);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User readUser(long id) {
         return userDao.readUser(id);
     }
 
+    @Transactional
     @Override
     public User deleteUser(long id) {
         User user = null;
